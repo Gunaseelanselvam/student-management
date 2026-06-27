@@ -1,6 +1,7 @@
 package com.studentmgmt.student_management.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.internal.build.AllowNonPortable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,21 @@ public class StudentService {
     }
 
     public Student createStudent(Student student){
+        return studentRepository.save(student);
+    }
+
+    public Student updateStudent(Long id, Student updatedStudent){
+        Optional<Student> existingStudent =  studentRepository.findById(id );
+        if(!existingStudent.isPresent()){
+            return null;
+        }
+        Student student = existingStudent.get();
+        student.setFirstName(updatedStudent.getFirstName());
+        student.setLastName(updatedStudent.getLastName());
+        student.setEmail(updatedStudent.getEmail());
+        student.setDepartment(updatedStudent.getDepartment());
+        student.setCgpa(updatedStudent.getCgpa());
+
         return studentRepository.save(student);
     }
     
