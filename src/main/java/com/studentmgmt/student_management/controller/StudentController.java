@@ -3,6 +3,7 @@ package com.studentmgmt.student_management.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,4 +48,13 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
     
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteStudent(@PathVariable Long id){
+        boolean deleted = studentService.deleteStudent(id);
+        if(!deleted){
+            return ResponseEntity.status(404).body("Student not found with id " + id);
+        }
+        return ResponseEntity.status(204).build();
+    }
 }
