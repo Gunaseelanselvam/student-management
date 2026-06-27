@@ -1,6 +1,7 @@
 package com.studentmgmt.student_management.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,4 +58,17 @@ public class StudentController {
         }
         return ResponseEntity.status(204).build();
     }
+
+
+@GetMapping("/{id}")
+public ResponseEntity<Object> getByStudentId(@PathVariable Long id ){
+
+Optional<Student> student = studentService.getStudentById(id);
+if(!student.isPresent()){
+return ResponseEntity.status(404).body("Student not found with id " + id);
+}
+return ResponseEntity.status(200).body(student.get());
+
+}
+    
 }
