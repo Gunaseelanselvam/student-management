@@ -63,11 +63,8 @@ public class StudentController {
 @GetMapping("/{id}")
 public ResponseEntity<Object> getByStudentId(@PathVariable Long id ){
 
-Optional<Student> student = studentService.getStudentById(id);
-if(!student.isPresent()){
-return ResponseEntity.status(404).body("Student not found with id " + id);
-}
-return ResponseEntity.status(200).body(student.get());
+Student student = studentService.getStudentById(id);
+return ResponseEntity.status(200).body(student);
 
 }
     

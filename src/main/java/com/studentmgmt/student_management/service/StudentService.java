@@ -3,10 +3,10 @@ package com.studentmgmt.student_management.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.internal.build.AllowNonPortable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.studentmgmt.student_management.exception.StudentNotFoundException;
 import com.studentmgmt.student_management.model.Student;
 import com.studentmgmt.student_management.repository.StudentRepository;
 
@@ -52,9 +52,18 @@ public class StudentService {
      return true;
     }
 
-    public Optional<Student> getStudentById(Long id){
-       return studentRepository.findById(id);
+    // public Optional<Student> getStudentById(Long id){
+    //    return studentRepository.findById(id);
       
+    // }
+
+
+   public Student getStudentById(Long id){
+    Optional<Student> student = studentRepository.findById(id);
+    if(!student.isPresent()){
+        throw new StudentNotFoundException("Student not found with id " + id);
+    }
+    return student.get();
     }
 
     
