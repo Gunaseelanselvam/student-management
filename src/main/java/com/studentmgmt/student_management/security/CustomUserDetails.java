@@ -1,27 +1,39 @@
 
 package com.studentmgmt.student_management.security;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.studentmgmt.student_management.model.User;
 
 
-class CustomUserDetails implements UserDetails{
+
+
+public class CustomUserDetails implements UserDetails{
+
+   private User user;
+
+    CustomUserDetails(User user){
+        this.user = user;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        throw new UnsupportedOperationException("Not supported yet.");
+      return List.of(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override
     public String getPassword() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return user.getUsername();
     }
 
 }
