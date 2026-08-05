@@ -8,22 +8,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.studentmgmt.student_management.model.User;
-import com.studentmgmt.student_management.repository.UserRespository;
+import com.studentmgmt.student_management.repository.UserRepository;
 
 
 @Service
 
 public class UserDetailsServiceImpl implements UserDetailsService{
 
-    private final UserRespository userRespository;
+    private final UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRespository userRespository){
-        this.userRespository = userRespository;
+    public UserDetailsServiceImpl(UserRepository userRespository){
+        this.userRepository = userRespository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Optional<User> userInformation = userRespository.findByUsername(username);
+        Optional<User> userInformation = userRepository.findByUsername(username);
         if(!userInformation.isPresent()){
             throw new UsernameNotFoundException("User not found");
         } 
